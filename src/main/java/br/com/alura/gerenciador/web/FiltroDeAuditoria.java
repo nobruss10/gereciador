@@ -9,29 +9,45 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-@WebFilter(urlPatterns="/*")
-public class FiltroDeAuditoria  implements Filter {
+@WebFilter(urlPatterns = "/*")
+public class FiltroDeAuditoria implements Filter {
 
 	@Override
 	public void destroy() {
-	
+
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpServletRequest res = ( HttpServletRequest ) request ;
-		System.out.println("Usuario acessando: " + res.getRequestURI());
+		HttpServletRequest req = (HttpServletRequest) request;
+
+		String usuario = getUsuario(req);
+
+		System.out.println("Usuario " + usuario + " acessando: " + req.getRequestURI());
 		chain.doFilter(request, response);
-		
+
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		
+
 	}
 
+	private String getUsuario(HttpServletRequest req) {
+		Cookie[] cookies = req.getCookies();
+		String usuario = "<Deslogado>";
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("usuario.logado")) {
+					usuario = cookie.getValue();
+				}
+			}
+		}
+		return usuario;
+	}
 }
