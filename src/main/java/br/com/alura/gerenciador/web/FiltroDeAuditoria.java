@@ -2,6 +2,7 @@ package br.com.alura.gerenciador.web;
 
 import java.io.IOException;
 
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,6 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import br.com.alura.gerenciador.web.Cookies;
 
 @WebFilter(urlPatterns = "/*")
 public class FiltroDeAuditoria implements Filter {
@@ -39,15 +41,9 @@ public class FiltroDeAuditoria implements Filter {
 	}
 
 	private String getUsuario(HttpServletRequest req) {
-		Cookie[] cookies = req.getCookies();
-		String usuario = "<Deslogado>";
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("usuario.logado")) {
-					usuario = cookie.getValue();
-				}
-			}
-		}
-		return usuario;
+		
+		Cookie cookie = new Cookies(req.getCookies()).buscaUsuarioLogado();
+		if(cookie == null) return "<Deslogado>" ;
+		return cookie.getValue();
 	}
 }

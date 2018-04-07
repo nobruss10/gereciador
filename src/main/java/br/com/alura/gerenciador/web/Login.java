@@ -29,6 +29,7 @@ public class Login extends HttpServlet {
 		
 		} else {
 			Cookie cookie = new Cookie("usuario.logado", email);
+			cookie.setMaxAge(10 * 60);
 			resp.addCookie(cookie);
 			writer.println("<html><body><p>Usuário logado com sucesso! </p> </body></html>");
 		}
