@@ -8,17 +8,20 @@
 		<h3>Logado como: ${usuarioLogado.email}</h3>
 	</c:if>
 	
-	<form action="novaEmpresa" method="post">
+	<form action="executa" method="post">
 		nome:<input type="text" name="nome">
+		<input type="hidden" name="tarefa" value="NovaEmpresa">
 		<input type="submit" value="Enviar"></input>
 	</form>
 	
-	<form action="login" method="post">
+	<form action="executa" method="POST">
 		email :<input type="email" name="email">
 		senha :<input type="password" name="senha">
+		<input type="hidden" name="tarefa" value="Login">
 		<input type="submit" value="Enviar"></input>
 	</form>
-	<form action="Logout" method="POST">
+	<form action="executa" method="POST">
+		<input type="hidden" name="tarefa" value="Logout">
 		<button type="submit">Deslogar</button>
 	</form>
 </body>
