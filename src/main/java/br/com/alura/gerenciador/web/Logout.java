@@ -22,15 +22,15 @@ public class Logout extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter writer = resp.getWriter();
-		Usuario usuario = (Usuario) req.getSession().getAttribute("usuario.logado");
+		Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
 		String msg;
 		if (usuario == null) {
 			msg = "Não há usuário logado!" ;
 			redirecionar(req, resp , msg) ;
 			return;
 		}
-		msg = "Usuário logado com sucesso!" ;
-		req.getSession().removeAttribute("usuario.logado");
+		msg = "Usuário Deslogado!" ;
+		req.getSession().removeAttribute("usuarioLogado");
 		// resp.sendRedirect("Logout.html");
 		redirecionar(req, resp, msg);
 	}
